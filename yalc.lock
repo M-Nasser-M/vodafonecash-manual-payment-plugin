@@ -1,0 +1,9 @@
+{
+  "version": "v1",
+  "packages": {
+    "vodafonecash-manual-payment-plugin": {
+      "signature": "2b264ef8db93fe3d92371904eba656c0",
+      "file": true
+    }
+  }
+}
