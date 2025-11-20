@@ -4,6 +4,7 @@
   "description": "Vodafone Cash manual payment provider for Medusa",
   "author": "Mohamed Nasser",
   "license": "MIT",
+  "repository": {"url": "https://github.com/M-Nasser-M/vodafonecash-manual-payment-plugin"},
   "files": [
     ".medusa/server"
   ],
