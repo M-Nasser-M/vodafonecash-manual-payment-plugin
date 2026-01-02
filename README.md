@@ -13,16 +13,17 @@
 
 <h4 align="center">
   <a href="https://docs.medusajs.com">Documentation</a> |
-  <a href="https://www.medusajs.com">Website</a>
+  <a href="https://www.medusajs.com">Website</a> |
+  <a href="https://github.com/M-Nasser-M/vodafonecash-manual-payment-plugin">GitHub</a>
 </h4>
 
 <p align="center">
-  A Medusa.js payment provider plugin for Vodafone Cash manual payments with phone number validation
+  <strong>A Medusa.js manual payment provider plugin for Vodafone Cash that requires manual verification of payments</strong>
 </p>
 
 ## Overview
 
-This plugin provides a manual payment provider for Vodafone Cash, a popular mobile payment service in Egypt and other African countries. The plugin includes:
+This plugin provides a **manual payment provider** for Vodafone Cash, a popular mobile payment service in Egypt and other African countries. **Important:** This plugin requires manual verification by administrators for all payments. The plugin includes:
 
 - **Phone Number Validation**: Ensures phone numbers start with `0100` and are exactly 11 digits
 - **Manual Payment Processing**: Allows customers to receive payment instructions and admins to verify payments manually
@@ -31,9 +32,10 @@ This plugin provides a manual payment provider for Vodafone Cash, a popular mobi
 
 ## Features
 
+- ✅ **Manual Verification Required**: All payments must be manually verified by administrators
 - ✅ **Strict Phone Validation**: Only accepts Vodafone Cash numbers (0100XXXXXXX format)
 - ✅ **Payment Instructions**: Provides clear step-by-step payment instructions to customers
-- ✅ **Admin Verification**: Allows admins to verify and manage payments manually
+- ✅ **Admin Management Interface**: Comprehensive admin endpoints for payment verification and status management
 - ✅ **Error Handling**: Comprehensive error handling with detailed validation messages
 - ✅ **TypeScript Support**: Fully typed implementation following Medusa best practices
 
@@ -45,9 +47,9 @@ This plugin is compatible with versions >= 2.4.0 of `@medusajs/medusa`.
 
 1. Install the plugin in your Medusa project:
 ```bash
-npm install vodafonecash-manual-payment-plugin
+npm install @m-nasser-m/medusa-payment-vodafone-cash-manual
 # or
-yarn add vodafonecash-manual-payment-plugin
+yarn add @m-nasser-m/medusa-payment-vodafone-cash-manual
 ```
 
 2. Add the plugin to your `medusa-config.js`:
@@ -55,7 +57,7 @@ yarn add vodafonecash-manual-payment-plugin
 module.exports = {
   plugins: [
     {
-      resolve: "vodafonecash-manual-payment-plugin",
+      resolve: "@m-nasser-m/medusa-payment-vodafone-cash-manual",
       options: {
         debug: false // Optional: enable debug logging
       }
@@ -67,7 +69,7 @@ module.exports = {
       options: {
         providers: [
           {
-            resolve: "vodafonecash-manual-payment-plugin/providers/vodafone-cash",
+            resolve: "@m-nasser-m/medusa-payment-vodafone-cash-manual/providers/vodafone-cash",
             id: "vodafone-cash",
             options: {
               debug: false
