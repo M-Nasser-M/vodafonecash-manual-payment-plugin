@@ -1,6 +1,6 @@
 {
   "name": "@m-nasser-m/medusa-payment-vodafone-cash-manual",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "Vodafone Cash manual payment provider for Medusa - Requires manual verification of payments",
   "author": "Mohamed Nasser",
   "license": "MIT",
