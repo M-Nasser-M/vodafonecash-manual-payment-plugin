@@ -28,6 +28,7 @@ import {
 } from "@medusajs/framework/types";
 import {
   AbstractPaymentProvider,
+  MedusaError,
   PaymentActions,
   PaymentSessionStatus,
 } from "@medusajs/framework/utils";
@@ -42,20 +43,8 @@ interface vodafoneCashManualAuthorizeInput extends AuthorizePaymentInput {
 export class VodafoneCashManualBase extends AbstractPaymentProvider {
   static identifier = "vodafone-cash-manual";
 
-  async getStatus(_): Promise<string> {
-    return "pending";
-  }
-
   validatePhoneNumber(phoneNumber: PhoneNumber): void {
     phoneNumberSchema.parse(phoneNumber);
-  }
-
-  async getPaymentData(input: any): Promise<Record<string, unknown>> {
-    return {
-      provider_id: this.constructor.name,
-      manual_payment: true,
-      requires_confirmation: true,
-    };
   }
 
   async initiatePayment(
@@ -68,7 +57,10 @@ export class VodafoneCashManualBase extends AbstractPaymentProvider {
   async getPaymentStatus(
     input: GetPaymentStatusInput
   ): Promise<GetPaymentStatusOutput> {
-    throw new Error("Method not implemented.");
+    throw new MedusaError(
+      MedusaError.Types.NOT_ALLOWED,
+      "Manual payment providers do not support payment status retrieval."
+    );
   }
 
   async retrievePayment(

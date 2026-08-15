@@ -1,12 +1,11 @@
-import * as z from "zod";
+import * as z from "@medusajs/framework/zod";
 
 export const phoneNumberSchema = z
   .string({
-    required_error: "Phone number is required",
-    invalid_type_error: "Phone number must be a string",
+    error: "Phone number is required",
   })
   .length(11, "Phone number must be 11 digits")
-  .startsWith("0100", "Phone number must start with 0100")
+  .startsWith("010", "Phone number must start with 010")
   .regex(/^\d+$/, "Phone number must contain only digits (0–9)");
 
 export type PhoneNumber = z.infer<typeof phoneNumberSchema>;

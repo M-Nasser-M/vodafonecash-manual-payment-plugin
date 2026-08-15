@@ -1,15 +1,11 @@
-import { MedusaRequest, MedusaResponse } from "@medusajs/framework/http";
-import { z } from "zod";
+import {
+  MedusaRequest,
+  MedusaResponse,
+} from "@medusajs/framework/http"
+import { createPaymentRequestWorkflow } from "../../../workflows"
+import type { CreatePaymentRequestSchema } from "./middlewares"
 
-// Validation schema for Vodafone Cash phone number
-const vodafoneCashSchema = z.object({
-  phone_number: z.string()
-    .regex(/^0100\d{7}$/, "Phone number must start with 0100 and be exactly 11 digits")
-    .transform((phone) => phone.replace(/\s+/g, '').replace(/[^\d]/g, '')),
-  customer_name: z.string().optional(),
-  amount: z.number().positive("Amount must be positive"),
-  currency_code: z.string().default("EGP")
-});
+const PROVIDER_ID = "vodafone-cash-manual"
 
 export async function GET(
   req: MedusaRequest,
@@ -17,35 +13,43 @@ export async function GET(
 ) {
   res.json({
     message: "Vodafone Cash Payment Provider",
-    provider_id: "vodafone-cash",
+    provider_id: PROVIDER_ID,
     supported_currencies: ["EGP"],
-    phone_format: "0100XXXXXXX (11 digits starting with 0100)"
-  });
+    phone_format: "010XXXXXXXX (11 digits starting with 010)",
+  })
 }
 
 export async function POST(
-  req: MedusaRequest,
+  req: MedusaRequest<CreatePaymentRequestSchema>,
   res: MedusaResponse
 ) {
-  try {
-    // Validate request body
-    const validatedData = vodafoneCashSchema.parse(req.body);
-    
-    const { phone_number, customer_name, amount, currency_code } = validatedData;
-    
-    // Format phone number for display
-    const formattedPhone = `${phone_number.slice(0, 4)} ${phone_number.slice(4, 7)} ${phone_number.slice(7)}`;
-    
-    // Create payment session data
-    const paymentSession = {
-      id: `vodafone_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-      provider_id: "vodafone-cash",
+  const { phone_number, customer_name, amount, currency_code } =
+    req.validatedBody
+
+  const { result } = await createPaymentRequestWorkflow(req.scope).run({
+    input: {
+      provider_id: PROVIDER_ID,
+      phone_number,
+      customer_name,
+      amount,
+      currency_code,
+    },
+  })
+
+  // Format phone number for display
+  const formattedPhone = `${phone_number.slice(0, 4)} ${phone_number.slice(4, 7)} ${phone_number.slice(7)}`
+
+  res.status(201).json({
+    success: true,
+    data: {
+      id: result.id,
+      provider_id: PROVIDER_ID,
       amount,
       currency_code,
       phone_number: formattedPhone,
       customer_name,
-      status: "pending",
-      created_at: new Date().toISOString(),
+      status: result.status,
+      created_at: result.created_at,
       payment_instructions: {
         message: `Please send ${amount} ${currency_code} via Vodafone Cash`,
         phone_number: formattedPhone,
@@ -53,31 +57,9 @@ export async function POST(
           "Open your Vodafone Cash app or dial *9*",
           `Send ${amount} ${currency_code} to the merchant`,
           "Keep your transaction reference number",
-          "Your order will be confirmed once payment is verified"
-        ]
-      }
-    };
-    
-    res.status(201).json({
-      success: true,
-      data: paymentSession
-    });
-  } catch (error) {
-    if (error instanceof z.ZodError) {
-      return res.status(400).json({
-        success: false,
-        error: "Validation failed",
-        details: error.errors.map(err => ({
-          field: err.path.join('.'),
-          message: err.message
-        }))
-      });
-    }
-    
-    res.status(500).json({
-      success: false,
-      error: "Internal server error",
-      message: error.message
-    });
-  }
+          "Your order will be confirmed once payment is verified",
+        ],
+      },
+    },
+  })
 }
