@@ -1,6 +1,6 @@
 {
   "name": "@m-nasser-m/medusa-payment-vodafone-cash-manual",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "description": "Vodafone Cash manual payment provider for Medusa - Requires manual verification of payments",
   "author": "Mohamed Nasser",
   "license": "MIT",
@@ -45,13 +45,13 @@
     "bunpublish": "bun publish"
   },
   "devDependencies": {
-    "@medusajs/admin-sdk": "2.18.0",
-    "@medusajs/cli": "2.18.0",
-    "@medusajs/eslint-plugin": "2.18.0",
-    "@medusajs/framework": "2.18.0",
-    "@medusajs/icons": "2.18.0",
-    "@medusajs/medusa": "2.18.0",
-    "@medusajs/test-utils": "2.18.0",
+    "@medusajs/admin-sdk": "^2.15.2",
+    "@medusajs/cli": "^2.15.2",
+    "@medusajs/eslint-plugin": "^2.15.2",
+    "@medusajs/framework": "^2.15.2",
+    "@medusajs/icons": "^2.15.2",
+    "@medusajs/medusa": "^2.15.2",
+    "@medusajs/test-utils": "^2.15.2",
     "@medusajs/ui": "4.2.0",
     "@swc/core": "1.5.7",
     "@types/node": "^20.0.0",
@@ -65,12 +65,12 @@
 
   },
   "peerDependencies": {
-    "@medusajs/admin-sdk": "2.18.0",
-    "@medusajs/cli": "2.18.0",
-    "@medusajs/framework": "2.18.0",
-    "@medusajs/icons": "2.18.0",
-    "@medusajs/medusa": "2.18.0",
-    "@medusajs/test-utils": "2.18.0",
+    "@medusajs/admin-sdk": "^2.15.2",
+    "@medusajs/cli": "^2.15.2",
+    "@medusajs/framework": "^2.15.2",
+    "@medusajs/icons": "^2.15.2",
+    "@medusajs/medusa": "^2.15.2",
+    "@medusajs/test-utils": "^2.15.2",
     "@medusajs/ui": "4.2.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
