@@ -1,6 +1,6 @@
 {
   "name": "@m-nasser-m/medusa-payment-vodafone-cash-manual",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "description": "Vodafone Cash manual payment provider for Medusa - Requires manual verification of payments",
   "author": "Mohamed Nasser",
   "license": "MIT",
@@ -62,7 +62,6 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.8.2",
     "yalc": "^1.0.0-pre.53"
-
   },
   "peerDependencies": {
     "@medusajs/admin-sdk": "^2.15.2",
@@ -76,7 +75,7 @@
     "react-dom": "^18.3.1"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=22"
   },
   "trustedDependencies": [
     "@medusajs/telemetry",
